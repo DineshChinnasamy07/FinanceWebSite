@@ -24,9 +24,15 @@ export function estimateGoldLoan({
 }
 
 export function formatINR(amount) {
-  return new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    maximumFractionDigits: 0,
-  }).format(Number(amount) || 0);
+  const value = Number(amount) || 0;
+
+  try {
+    return new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: 'INR',
+      maximumFractionDigits: 0,
+    }).format(value);
+  } catch {
+    return 'Rs ' + Math.round(value).toLocaleString('en-IN');
+  }
 }
